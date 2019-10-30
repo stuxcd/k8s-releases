@@ -1,10 +1,11 @@
-# Dockerfiles [![Build Status](https://travis-ci.com/josh9398/dockerfiles.svg?branch=master)](https://travis-ci.com/josh9398/dockerfiles)
+# Dockerfiles 
+[![Build Status](https://travis-ci.com/josh9398/dockerfiles.svg?branch=master)](https://travis-ci.com/josh9398/dockerfiles)
 
 Accumulating useful images
 
 ## Alpine curl
 
-Useful for curl command testing. Link to [DockerHub](https://hub.docker.com/r/josh9398/alpine-curl)
+Useful for curl command testing.
 
 ### Run with:
 
@@ -14,7 +15,7 @@ docker run -d -t josh9398/alpine-curl
 
 ## S3FS
 
-Useful as a sidecar container in kubernetes or compose. Link to [DockerHub](https://hub.docker.com/r/josh9398/s3fs)
+Useful as a sidecar container in kubernetes or compose. 
 
 It mounts an S3 bucket that can be propogated to other containers as a shared volume.
 
@@ -77,3 +78,6 @@ spec:
         emptyDir: {}
 ```
 
+## DockerHub
+
+Link to images on DockerHub [here](https://hub.docker.com/u/josh9398)
