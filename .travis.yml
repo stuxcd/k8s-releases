@@ -4,9 +4,8 @@ services:
   - docker
 
 script:
-  - docker build -t ${repo}/alpine-curl:latest alpine-curl
-  - docker build -t ${repo}/s3fs:latest s3fs
+  - docker build -t ${REPO}/alpine-curl:latest alpine-curl
+  - docker build -t ${REPO}/s3fs:latest s3fs
+  - docker images
 
-deploy:
-  - docker push ${repo}/alpine-curl:latest
-  - docker push ${repo}/s3fs
+
