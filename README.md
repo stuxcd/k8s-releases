@@ -4,7 +4,7 @@ Accumulating useful images
 
 ## Alpine curl
 
-Useful for curl command testing.
+Useful for curl command testing. Link to [DockerHub](https://hub.docker.com/r/josh9398/alpine-curl)
 
 ### Run with:
 
@@ -14,7 +14,7 @@ docker run -d -t josh9398/alpine-curl
 
 ## S3FS
 
-Useful as a sidecar container in kubernetes or compose.
+Useful as a sidecar container in kubernetes or compose. Link to [DockerHub](https://hub.docker.com/r/josh9398/s3fs)
 
 It mounts an S3 bucket that can be propogated to other containers as a shared volume.
 
