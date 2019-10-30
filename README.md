@@ -1,4 +1,4 @@
-# Dockerfiles
+# Dockerfiles [![Build Status](https://travis-ci.com/josh9398/dockerfiles.svg?branch=master)](https://travis-ci.com/josh9398/dockerfiles)
 
 Accumulating useful images
 
