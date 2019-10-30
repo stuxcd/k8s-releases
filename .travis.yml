@@ -1,8 +1,13 @@
 language: minimal
-services:
-- docker
-script:
-- docker build -t josh9398/alpine-curl:latest alpine-curl/
-- docker build -t josh9398/s3fs:latest s3fs/
-- docker images
 
+services:
+  - docker
+
+env:
+  global:
+    - secure: SENwUa/9IU3Iu0NGMr2bDDSPUQgYq27mp9wSECJDMj8LysdT4lG0eAw7zND0tUfSuFJtEZUVcFD/JSyoX5X/hBslaF3V0hUeRQYGChIf2FRJQk2U0nfRF9hxhvc+Ov5dVI8H4i+XNXSB7viJOyzbrHqlsqJQABkfWyWT88ZoQH1smCwRpFyxSM2qn/PtPXazAxeLxbKOKUyXhcEQ6X+abDybmPx0MdQVgLymfKYhm/E9Hq4JyKizBuZU3LNlkcB/UUACBCgxIfcW1xnMJ718CPFZTCu3XcRx+HlRHftRSzz5gykuR2rqipprZj2OEv3Si0tTt8mCxOo4KoZ9/bHsXozsW6Kn+xk4qVHWxrlk0GgWqnmsdkgW4Uy9FfTugSXmZ8XGidZdytwGuRtLg/A9f6xawgeVVqrAM5CxsttmWhRdoBIDcgNxCLisN7HKhieYwHXw9Uch1l7YfWE9jnbq/Okuh9wgcyyPw24MiDXXUIOhOt/RkRR8S+XYVLbVsTVilssdM+Kh/pQ33kInOyA84vmLeUmz56meZkK80fmPXjcSrlUXb6d6XlIiMdNwmXgdim9YldiWkx6h0BA8sme/BO//6JwsEUP6cwJNx+OsU1ICu0nQhQj52Wutugo5AuDBWRkhtHuBg38ncgD2KDwJDFd/waGBIh/jgotnHz/oxkQ=
+
+script:
+  - docker build -t josh9398/alpine-curl:latest alpine-curl/
+  - docker build -t josh9398/s3fs:latest s3fs/
+  - echo $TEST
