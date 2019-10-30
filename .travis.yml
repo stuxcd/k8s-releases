@@ -5,9 +5,15 @@ services:
 
 env:
   global:
-    - secure: sjCf3zhIcocP2B7TjBMBJYDhJV5tdqPvAE3vm8SbwpCx7v8mXT0fwMMam17k2/iMwnlNWPmmjo+COryxssxdLmVHqzwNHhY2aaqGzL0FYc8KMjnuqyupZVO/IlFZhMxIcLYefLmtFEHXLmYDK/GRbXeyhhFUo6rjTPs4oJ/Cy2MW8Elew4XulAs0OJ9JJxVWljIAbbZJF3CymdChjAY11Sh+qhmxrguds1J5XU1jOsHTr9XBqjR3ngbsB97zy6qNj82ZQlEWIIrjE9SCJfqWRPGGuYgGMVlsE7Kd0ZopLYdgh+IGDTmFHZytTtE51ft0qqE4t7zuJZyQ4xwHsKrorGPFBG4OV04YkCEXtXfRMA8pyseZfwodp/qrtjtIkK/DVs8RcexT6Uwc7CECYhm2oi7rooq1MbhEp7sRkCglUhRpA4MT5lxpKaq2k1+87rY0kL85fghuPDDfVjfdc8ojSasJRdUrACmOhByhmsSGmtKWCdbl9Za2Ja0bD2R/iNQBH9D1ozeXH4KMZrTEC4PffzDIAJ/NhQBflVMdKAG1uNbknlUYxEDVhmqWsQscZ/jvNm7g/Vzo8j4xpcg4AlWccZkbDZGCbBpISbmbOW/MMjA5GKBJD4hF9SrFtt1FhJwSu5afb8ZNEJXKHgCmLn3XTC74g4rNGUQHD0Oij3s09Rc=
+    - DOCKER_USERNAME=josh9398
+    - secure: "WGeZV86JZo0qBLoKV5MXTMvdBgA5dW3wxEhseJao4wNifkgJGMANLkmZ0qwSauASfEUeuO7RYhHeT8C2yh+J+U35GyDW+UPMuUN4zfaTvjmtH8hdC4rOGIxV0SNr7AN1mhwID8Pk6zyrFbuqz34Hwf4zUCEm+H/3e7B7wFdgGOw5cnc/j+5JY2LIIQo7fnrz29bm3IMixWODCeuuIhRXBcpvPkZKrftPKtM3/mzvqsnfP4Fbke+kftqhRmeTcmg5vtiHVQh0wpvV+d/dcTC7rOSrd7aTSAGn8Uz/pfNOhtoJ82tsRsoZIzPyTzoRSkjkd9TKxkm6trWE8v61zAoSBIbXo6b4ja8WpeItN/1JuO4oKh3cloebxR+A6nHZbNgwQDXeSw6E+sqruMYzwWhZSA5cqvXoTd5vdJDHDP9mO2Gtco6OfInmNmKFjg0pAOu/iSYCDIdYzhDEFcqi3sPSy+PnJRn/XqaIg8soD+G1I5gUKrXfvOlcBhsHwQh46eTLjoWc98RFF60K4MiGPNACOU6R7I/PkaTdIofRZcwB2G7L2iMM2LGS6fYJaSLnmXXIW8+GgLgy3jtmChF/bqkmb2397eeoamw86+Ai52NrQF59NajZ4u+EaJz0HGY/YVc0JH0vZul61C4JxR10AtPEmHw/Rjj/EUmPc4+jqrpdpxk="
+    - secure: "bZeZvCOS8Cy9uQQ8aF0INbuadqkLZaT1/zXbAwGkv8X4zRYTEqICG4qzgDLRJ0dLpSn4/U/7+IQhzbIFM5G4sX/c5MQeN9tsafNBn1pz/zbWjjqbsNaqBAw5YB1FcFq5Air+gOwcYNldIzB6PLv+enmp3XM5yQWEWDF3P48a6TzTs5my6sbK1wdzvGB7d+kdohBTckjFJ1OHZOjnRD2yejj5Amp/EITJbKGgZfX7cPEVfIHVzUQqmjrYhsTMtPJ7DuINhqyZ7dQnuwLp1URsyCNmKZ6ih4HfvyZtYQ5lo7yc2KqSIzxpatwLizffKRrer1+efrwUqnVpbGK7gwYBZ8i6LaTcFNEMEMqgeZqIGuk0yH3Yp+m67/Jzh42F8xnd2kcga8RhlnBaqCA+oJ7WpfBgFPx//2YBlEdOVCONL0kaPsVvLkcL13jqPmSJGUH/GfMHI9qJDi/NziFfe9d7sUthr+0mDUN04uAKu133sy1fAkfOmk5w6j7DCL1edfNoCXRYBXw9lyn4qv9VH6nkvmkfKmKdL4bXIjUUC24+bSmL6owEPFPJIZvsEHbznPUV8lDhe74UcbFkVfXLMg8eVCdUrZ9nUjGIcnDooBlq+uTGu6HZHPDxPBjTlqnxfvNYGcEQilsVyopSbHLdA2UDmOBZcfs9zDbVepygekI6ksk="
 
 script:
-  - docker build -t josh9398/alpine-curl:latest alpine-curl/
-  - docker build -t josh9398/s3fs:latest s3fs/
-  - echo $TEST
+  - docker build -t ${DOCKER_USERNAME}/alpine-curl:latest alpine-curl/
+  - docker build -t ${DOCKER_USERNAME}/s3fs:latest s3fs/
+
+after_success:
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push ${DOCKER_USERNAME}/alpine-curl:latest
+  - docker push ${DOCKER_USERNAME}/s3fs:latest
