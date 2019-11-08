@@ -11,8 +11,10 @@ env:
 script:
   - docker build -t ${DOCKER_USERNAME}/alpine-curl:latest alpine-curl/
   - docker build -t ${DOCKER_USERNAME}/s3fs:latest s3fs/
+  - docker build -t ${DOCKER_USERNAME}/jenkins:latest jenkins/
 
 after_success:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker push ${DOCKER_USERNAME}/alpine-curl:latest
   - docker push ${DOCKER_USERNAME}/s3fs:latest
+  - docker push ${DOCKER_USERNAME}/jenkins:latest

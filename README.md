@@ -13,6 +13,17 @@ Useful for curl command testing.
 docker run -d -t josh9398/alpine-curl
 ```
 
+## Jenkins master
+
+Jenkins master built for s3fs. Comes pre-installed with aws cli for readiness and liveness tests.
+This particular file was designed to be used within air-gapped network, hence the pre-installed plugins.
+
+### Run with:
+
+```bash
+docker run -d -p 8080:8080 -p 50000:50000 josh9398/jenkins
+```
+
 ## S3FS
 
 Useful as a sidecar container in kubernetes or compose. 
