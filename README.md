@@ -13,6 +13,16 @@ Useful for curl command testing.
 docker run -d -t josh9398/alpine-curl
 ```
 
+## Debug-shed
+
+Swiss army knife for container network testing. Useful when deploying to k8s.
+
+### Run with:
+
+```bash
+docker run -it josh9398/debug-shed
+```
+
 ## Jenkins master
 
 Jenkins master built for s3fs. Comes pre-installed with aws cli for readiness and liveness tests.
