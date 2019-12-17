@@ -25,8 +25,7 @@ docker run -it josh9398/debug-shed
 
 ## Jenkins master
 
-Jenkins master built for s3fs. Comes pre-installed with aws cli for readiness and liveness tests.
-This particular file was designed to be used within air-gapped network, hence the pre-installed plugins.
+Jenkins master with plugins installed for bare metal deployments in air gapped network.
 
 ### Run with:
 
