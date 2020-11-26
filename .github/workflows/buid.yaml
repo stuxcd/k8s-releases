@@ -11,27 +11,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build alpine-curl
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/alpine-curl:latest alpine-curl/
-      - name: Build s3fs
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/s3fs:latest s3fs/
-      - name: Build jenkins
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/jenkins:latest jenkins/
-      - name: Build debug-shed
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/debug-shed:latest debug-shed/
-    
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Docker login
-        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-      - name: Docker push alpine-curl
-        run: ${{ secrets.DOCKERHUB_USERNAME }}/alpine-curl:latest
-      - name: Docker push s3fs
-        run: ${{ secrets.DOCKERHUB_USERNAME }}/s3fs:latest
-      - name: Docker push jenkins
-        run: ${{ secrets.DOCKERHUB_USERNAME }}/jenkins:latest
-      - name: Docker push debug-shed
-        run: ${{ secrets.DOCKERHUB_USERNAME }}/debug-shed:latest
+      - name: Publish apline-curl
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: josh9398/alpine-curl
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          workdir: alpine-curl
+      - name: Publish s3fs
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: josh9398/s3fs
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          workdir: s3fs
+      - name: Publish jenkins
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: josh9398/jenkins
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          workdir: jenkins
+      - name: Publish debug-shed
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: josh9398/debug-shed
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          workdir: debug-shed    
