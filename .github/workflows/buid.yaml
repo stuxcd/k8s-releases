@@ -1,0 +1,35 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build alpine-curl
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/alpine-curl:latest alpine-curl/
+      - name: Build s3fs
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/s3fs:latest s3fs/
+      - name: Build jenkins
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/jenkins:latest jenkins/
+      - name: Build debug-shed
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/debug-shed:latest debug-shed/
+    
+  publish:
+    needs: build
+    steps:
+      - name: Docker login
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Docker push alpine-curl
+        run: ${{ secrets.DOCKERHUB_USERNAME }}/alpine-curl:latest
+      - name: Docker push s3fs
+        run: ${{ secrets.DOCKERHUB_USERNAME }}/s3fs:latest
+      - name: Docker push jenkins
+        run: ${{ secrets.DOCKERHUB_USERNAME }}/jenkins:latest
+      - name: Docker push debug-shed
+        run: ${{ secrets.DOCKERHUB_USERNAME }}/debug-shed:latest
