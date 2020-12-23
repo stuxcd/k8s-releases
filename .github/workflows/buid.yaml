@@ -39,3 +39,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           workdir: debug-shed    
+      - name: Publish wait-for-it
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: josh9398/wait-for-it
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          workdir: debug-shed

@@ -1,5 +1,5 @@
 # Dockerfiles 
-[![Build Status](https://travis-ci.com/josh9398/dockerfiles.svg?branch=master)](https://travis-ci.com/josh9398/dockerfiles)
+[![dockerfiles-master Actions Status](https://github.com/josh9398/dockerfiles/workflows/dockerfiles-master/badge.svg)](https://github.com/josh9398/dockerfiles/actions)
 
 Accumulating useful images
 
@@ -96,6 +96,54 @@ spec:
       volumes:
       - name: s3-shared
         emptyDir: {}
+```
+
+## Wait for it
+
+Uses [vishnubob's](https://github.com/vishnubob/wait-for-it) wait for it script in docker. 
+
+```yaml
+version: '3'
+
+networks:
+  integration-tests:
+    driver: bridge
+
+services:
+  awesome-app:
+    image: your/awesome-app
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: test
+    depends_on:
+      - wait
+    networks:
+      - integration-tests
+  db:
+    image: postgres:11.1
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: test
+    restart: on-failure
+    networks:
+      - integration-tests
+  wait:
+    image: josh9398/wait-for-it
+    command: ["db:5432"]
+    depends_on:
+      - db
+    networks:
+      - integration-tests
+```
+Then test with:
+```bash
+docker-compose up --exit-code-from awesome-app
 ```
 
 ## DockerHub
