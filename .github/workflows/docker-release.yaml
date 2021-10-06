@@ -1,10 +1,9 @@
-name: dockerfiles-master
+name: Release Docker
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: 
+      - main
 
 jobs:
   build:
@@ -17,32 +16,32 @@ jobs:
           name: josh9398/alpine-curl
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          workdir: alpine-curl
+          workdir: dockerfiles/alpine-curl
       - name: Publish s3fs
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: josh9398/s3fs
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          workdir: s3fs
+          workdir: dockerfiles/s3fs
       - name: Publish jenkins
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: josh9398/jenkins
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          workdir: jenkins
+          workdir: dockerfiles/jenkins
       - name: Publish debug-shed
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: josh9398/debug-shed
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          workdir: debug-shed    
+          workdir: dockerfiles/debug-shed    
       - name: Publish wait-for-it
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: josh9398/wait-for-it
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          workdir: debug-shed
+          workdir: dockerfiles/debug-shed
