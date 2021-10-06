@@ -3,6 +3,16 @@ entries:
   debug-shed:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2021-10-06T12:27:02.223136329Z"
+    description: A Helm chart for debugging issues within Kubernetes clusters
+    digest: b26b805aca0b957325557171a25639fb72b68867904b6be3f1e4209abcc3fe93
+    name: debug-shed
+    type: application
+    urls:
+    - https://github.com/stuxcd/k8s-releases/releases/download/debug-shed-0.3.0/debug-shed-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2021-10-06T12:08:26.738240273Z"
     description: A Helm chart for debugging issues within Kubernetes clusters
     digest: 20eb9eaa433715dafa758919dc32d545dcfc2a342457e06477be21b56999595e
@@ -21,4 +31,4 @@ entries:
     urls:
     - https://github.com/stuxcd/k8s-releases/releases/download/debug-shed-0.1.0/debug-shed-0.1.0.tgz
     version: 0.1.0
-generated: "2021-10-06T12:08:26.738247474Z"
+generated: "2021-10-06T12:27:02.22315953Z"
