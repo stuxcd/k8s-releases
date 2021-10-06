@@ -7,8 +7,6 @@
 
 FROM ubuntu:14.04
 
-MAINTAINER Josh Bowen <josh.bowen@capgemini.com>
-
 ENV DUMB_INIT_VER 1.2.2
 ENV S3_BUCKET ''
 ENV MNT_POINT /mnt
