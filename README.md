@@ -1,5 +1,6 @@
-# Dockerfiles 
-[![dockerfiles-master Actions Status](https://github.com/josh9398/dockerfiles/workflows/dockerfiles-master/badge.svg)](https://github.com/josh9398/dockerfiles/actions)
+# K8S RELEASES 
+![docker workflow](https://github.com/stuxcd/k8s-releases/actions/workflows/docker-relase.yml/badge.svg)
+![helm workflow](https://github.com/stuxcd/k8s-releases/actions/workflows/helm-relase.yml/badge.svg)
 
 Accumulating useful charts and images
 
