@@ -1,7 +1,34 @@
 # Dockerfiles 
 [![dockerfiles-master Actions Status](https://github.com/josh9398/dockerfiles/workflows/dockerfiles-master/badge.svg)](https://github.com/josh9398/dockerfiles/actions)
 
-Accumulating useful images
+Accumulating useful charts and images
+
+## Requirements
+
+Add the helm repo
+
+```bash
+helm repo add stuxcd https://stuxcd.github.io/k8s-releases
+helm repo update
+
+helm repo search stuxcd
+```
+
+## Debug-shed
+
+Swiss army knife for container network testing. Useful when deploying to k8s.
+
+### Helm with:
+
+```bash
+helm install debug-shed stuxcd/debug-shed -n debug-system
+```
+
+### Docker with:
+
+```bash
+docker run -it josh9398/debug-shed
+```
 
 ## Alpine curl
 
@@ -11,16 +38,6 @@ Useful for curl command testing.
 
 ```bash
 docker run -d -t josh9398/alpine-curl
-```
-
-## Debug-shed
-
-Swiss army knife for container network testing. Useful when deploying to k8s.
-
-### Run with:
-
-```bash
-docker run -it josh9398/debug-shed
 ```
 
 ## Jenkins master
