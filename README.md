@@ -1,6 +1,6 @@
 # K8S RELEASES 
-![docker workflow](https://github.com/stuxcd/k8s-releases/actions/workflows/docker-relase.yml/badge.svg)
-![helm workflow](https://github.com/stuxcd/k8s-releases/actions/workflows/helm-relase.yml/badge.svg)
+![docker workflow](https://github.com/stuxcd/k8s-releases/actions/workflows/docker-release.yaml/badge.svg)
+![helm workflow](https://github.com/stuxcd/k8s-releases/actions/workflows/helm-release.yaml/badge.svg)
 
 Accumulating useful charts and images
 
