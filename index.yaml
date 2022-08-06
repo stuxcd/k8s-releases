@@ -1,5 +1,14 @@
 apiVersion: v1
 entries:
+  argo-cd-common:
+  - apiVersion: v2
+    created: "2022-08-06T21:38:51.343770785Z"
+    digest: 5040a167b084a6ce98c3350f06ebda32527d15ce55cbd838e4b7ea9d89802fcd
+    home: https://stuxcd.github.io/k8s-releases
+    name: argo-cd-common
+    urls:
+    - https://github.com/stuxcd/k8s-releases/releases/download/argo-cd-common-1.0.0/argo-cd-common-1.0.0.tgz
+    version: 1.0.0
   debug-shed:
   - apiVersion: v2
     appVersion: 1.0.0
@@ -31,4 +40,4 @@ entries:
     urls:
     - https://github.com/stuxcd/k8s-releases/releases/download/debug-shed-0.1.0/debug-shed-0.1.0.tgz
     version: 0.1.0
-generated: "2021-10-06T12:27:02.22315953Z"
+generated: "2022-08-06T21:38:51.343837785Z"
