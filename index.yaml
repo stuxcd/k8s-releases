@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   argo-cd-common:
   - apiVersion: v2
+    created: "2022-08-06T22:32:12.249330431Z"
+    digest: 9661316b3e3f791bd1e6ef21b90f8da1fd8ba5d5c4b8ab8f1d2d661ecdead258
+    home: https://stuxcd.github.io/k8s-releases
+    name: argo-cd-common
+    urls:
+    - https://github.com/stuxcd/k8s-releases/releases/download/argo-cd-common-1.0.1/argo-cd-common-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2022-08-06T22:07:26.558441414Z"
     digest: dde602129ea1fc5f7b32323ef3a99695cd98633da461578bb7728c2402403d26
     home: https://stuxcd.github.io/k8s-releases
@@ -10,6 +18,17 @@ entries:
     - https://github.com/stuxcd/k8s-releases/releases/download/argo-cd-common-1.0.0/argo-cd-common-1.0.0.tgz
     version: 1.0.0
   debug-shed:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-08-06T22:32:12.488279871Z"
+    description: A Helm chart for debugging issues within Kubernetes clusters
+    digest: c560324da2c46e248ca19a488c12def85b57f334380157550bf66fbcd5be0846
+    home: https://stuxcd.github.io/k8s-releases
+    name: debug-shed
+    type: application
+    urls:
+    - https://github.com/stuxcd/k8s-releases/releases/download/debug-shed-0.3.1/debug-shed-0.3.1.tgz
+    version: 0.3.1
   - apiVersion: v2
     appVersion: 1.0.0
     created: "2022-08-06T22:07:26.806296143Z"
@@ -23,6 +42,14 @@ entries:
     version: 0.3.0
   kyverno-policies:
   - apiVersion: v2
+    created: "2022-08-06T22:32:12.747334834Z"
+    digest: 6ad53ded3e0726ab18e739458cd35f788b81e1a565e608dc090764560010a269
+    home: https://stuxcd.github.io/k8s-releases
+    name: kyverno-policies
+    urls:
+    - https://github.com/stuxcd/k8s-releases/releases/download/kyverno-policies-1.0.1/kyverno-policies-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2022-08-06T22:07:27.055844897Z"
     digest: 6695393bd7b050406c71927dacdd16df26bfd93f972b7aacbd06cdf26a6c5bac
     home: https://stuxcd.github.io/k8s-releases
@@ -30,4 +57,4 @@ entries:
     urls:
     - https://github.com/stuxcd/k8s-releases/releases/download/kyverno-policies-1.0.0/kyverno-policies-1.0.0.tgz
     version: 1.0.0
-generated: "2022-08-06T22:07:27.055850497Z"
+generated: "2022-08-06T22:32:12.747348135Z"
