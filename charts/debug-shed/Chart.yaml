@@ -4,3 +4,4 @@ description: A Helm chart for debugging issues within Kubernetes clusters
 type: application
 version: 0.3.0
 appVersion: "1.0.0"
+home: https://stuxcd.github.io/k8s-releases

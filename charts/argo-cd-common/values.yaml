@@ -1,0 +1,11 @@
+argoCD:
+  project: operations-common
+
+metricsServer:
+  enabled: true
+
+certManager:
+  enabled: true
+
+kyverno:
+  enabled: true
