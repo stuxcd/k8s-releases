@@ -1,3 +1,33 @@
 apiVersion: v1
-entries: {}
-generated: "2022-08-06T21:38:51.343837785Z"
+entries:
+  argo-cd-common:
+  - apiVersion: v2
+    created: "2022-08-06T22:07:26.558441414Z"
+    digest: dde602129ea1fc5f7b32323ef3a99695cd98633da461578bb7728c2402403d26
+    home: https://stuxcd.github.io/k8s-releases
+    name: argo-cd-common
+    urls:
+    - https://github.com/stuxcd/k8s-releases/releases/download/argo-cd-common-1.0.0/argo-cd-common-1.0.0.tgz
+    version: 1.0.0
+  debug-shed:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-08-06T22:07:26.806296143Z"
+    description: A Helm chart for debugging issues within Kubernetes clusters
+    digest: 6dc09d76b2910bdd6da789b7b81a36209ba66b36e33865532ae51cfacf3ff06c
+    home: https://stuxcd.github.io/k8s-releases
+    name: debug-shed
+    type: application
+    urls:
+    - https://github.com/stuxcd/k8s-releases/releases/download/debug-shed-0.3.0/debug-shed-0.3.0.tgz
+    version: 0.3.0
+  kyverno-policies:
+  - apiVersion: v2
+    created: "2022-08-06T22:07:27.055844897Z"
+    digest: 6695393bd7b050406c71927dacdd16df26bfd93f972b7aacbd06cdf26a6c5bac
+    home: https://stuxcd.github.io/k8s-releases
+    name: kyverno-policies
+    urls:
+    - https://github.com/stuxcd/k8s-releases/releases/download/kyverno-policies-1.0.0/kyverno-policies-1.0.0.tgz
+    version: 1.0.0
+generated: "2022-08-06T22:07:27.055850497Z"
