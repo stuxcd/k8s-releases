@@ -50,7 +50,6 @@ preventNakedPods:
 
 recordCreationDetails:
   enabled: true
-  validationFailureAction: enforce
 
 requirePodRequestsLimits:
   enabled: true

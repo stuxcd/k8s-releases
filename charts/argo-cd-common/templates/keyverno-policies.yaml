@@ -14,11 +14,20 @@ spec:
   source:
     chart: kyverno-policies
     repoURL: https://stuxcd.github.io/k8s-releases
-    targetRevision: 1.0.0
+    targetRevision: 1.0.1
     helm:
       releaseName: kyverno-policies
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+  ignoreDifferences:
+  - group: kyverno.io
+    kind: ClusterPolicy
+    jsonPointers:
+    - /spec/rules
+  - group: kyverno.io
+    kind: Policy
+    jsonPointers:
+    - /spec/rules
 {{- end -}}

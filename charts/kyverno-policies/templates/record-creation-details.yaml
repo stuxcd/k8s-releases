@@ -21,7 +21,6 @@ metadata:
       for any object being created. It then protects this annotation from
       tampering or removal making it immutable.      
 spec:
-  validationFailureAction: {{ .Values.recordCreationDetails.validationFailureAction }}
   background: false
   rules:
   - name: add-userinfo
@@ -40,50 +39,4 @@ spec:
         metadata:
           annotations:
             kyverno.io/created-by: "{{ "{{" }} request.userInfo | to_string(@) {{ "}}" }}"
-  - name: prevent-updates-userinfo
-    match:
-      any:
-      - resources:
-          kinds:
-          - '*'
-          annotations:
-            kyverno.io/created-by: "?*"
-    preconditions:
-      any:
-      - key: "{{ "{{" }}request.operation{{ "}}" }}"
-        operator: Equals
-        value: UPDATE
-    validate:
-      message: The annotation kyverno.io/created-by is protected and may not be altered.
-      deny:
-        conditions:
-          all:
-          - key: "{{ "{{" }} request.object.metadata.annotations.\"kyverno.io/created-by\" || '' {{ "}}" }}"
-            operator: NotEquals
-            value: ""
-          - key: "{{ "{{" }} request.object.metadata.annotations.\"kyverno.io/created-by\" || '' {{ "}}" }}"
-            operator: NotEquals
-            value: "{{ "{{" }} request.oldObject.metadata.annotations.\"kyverno.io/created-by\" {{ "}}" }}"
-  - name: prevent-removals-userinfo
-    match:
-      any:
-      - resources:
-          kinds:
-          - '*'
-          annotations:
-            kyverno.io/created-by: "?*"
-    preconditions:
-      all:
-      - key: "{{ "{{" }}request.operation{{ "}}" }}"
-        operator: Equals
-        value: UPDATE
-      - key: "{{ "{{" }} request.oldObject.metadata.annotations.\"kyverno.io/created-by\" || '' {{ "}}" }}"
-        operator: Equals
-        value: "?*"
-    validate:
-      message: The annotation kyverno.io/created-by is protected and may not removed.
-      pattern:
-        metadata:
-          annotations:
-            kyverno.io/created-by: "?*"
 {{- end }}
