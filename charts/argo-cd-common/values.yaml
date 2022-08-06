@@ -9,3 +9,4 @@ kyverno:
 
 kyvernoPolicies:
   enabled: true
+  
