@@ -24,13 +24,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           workdir: dockerfiles/s3fs
-      - name: Publish jenkins
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: josh9398/jenkins
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          workdir: dockerfiles/jenkins
       - name: Publish debug-shed
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
