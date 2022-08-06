@@ -1,3 +1,4 @@
+{{- if .Values.recordCreationDetails.enabled -}}
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -20,7 +21,7 @@ metadata:
       for any object being created. It then protects this annotation from
       tampering or removal making it immutable.      
 spec:
-  validationFailureAction: enforce
+  validationFailureAction: {{ .Values.recordCreationDetails.validationFailureAction }}
   background: false
   rules:
   - name: add-userinfo
@@ -31,14 +32,14 @@ spec:
           - '*'
     preconditions:
       any:
-      - key: "{{request.operation}}"
+      - key: "{{ "{{" }}request.operation{{ "}}" }}"
         operator: Equals
         value: CREATE
     mutate:
       patchStrategicMerge:
         metadata:
           annotations:
-            kyverno.io/created-by: "{{ request.userInfo | to_string(@) }}"
+            kyverno.io/created-by: "{{ "{{" }} request.userInfo | to_string(@) {{ "}}" }}"
   - name: prevent-updates-userinfo
     match:
       any:
@@ -49,7 +50,7 @@ spec:
             kyverno.io/created-by: "?*"
     preconditions:
       any:
-      - key: "{{request.operation}}"
+      - key: "{{ "{{" }}request.operation{{ "}}" }}"
         operator: Equals
         value: UPDATE
     validate:
@@ -57,12 +58,12 @@ spec:
       deny:
         conditions:
           all:
-          - key: "{{ request.object.metadata.annotations.\"kyverno.io/created-by\" || '' }}"
+          - key: "{{ "{{" }} request.object.metadata.annotations.\"kyverno.io/created-by\" || '' {{ "}}" }}"
             operator: NotEquals
             value: ""
-          - key: "{{ request.object.metadata.annotations.\"kyverno.io/created-by\" || '' }}"
+          - key: "{{ "{{" }} request.object.metadata.annotations.\"kyverno.io/created-by\" || '' {{ "}}" }}"
             operator: NotEquals
-            value: "{{ request.oldObject.metadata.annotations.\"kyverno.io/created-by\" }}"
+            value: "{{ "{{" }} request.oldObject.metadata.annotations.\"kyverno.io/created-by\" {{ "}}" }}"
   - name: prevent-removals-userinfo
     match:
       any:
@@ -73,10 +74,10 @@ spec:
             kyverno.io/created-by: "?*"
     preconditions:
       all:
-      - key: "{{request.operation}}"
+      - key: "{{ "{{" }}request.operation{{ "}}" }}"
         operator: Equals
         value: UPDATE
-      - key: "{{ request.oldObject.metadata.annotations.\"kyverno.io/created-by\" || '' }}"
+      - key: "{{ "{{" }} request.oldObject.metadata.annotations.\"kyverno.io/created-by\" || '' {{ "}}" }}"
         operator: Equals
         value: "?*"
     validate:
@@ -85,3 +86,4 @@ spec:
         metadata:
           annotations:
             kyverno.io/created-by: "?*"
+{{- end }}

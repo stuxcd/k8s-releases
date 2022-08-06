@@ -1,3 +1,4 @@
+{{- if .Values.preventNakedPods.enabled -}}
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -17,7 +18,7 @@ metadata:
       This policy prevents such "naked" Pods from being created unless they originate
       from a higher-level workload controller of some sort.      
 spec:
-  validationFailureAction: enforce
+  validationFailureAction: {{ .Values.preventNakedPods.validationFailureAction }}
   background: true
   rules:
   - name: naked-pods
@@ -28,7 +29,7 @@ spec:
           - Pod
     preconditions:
       all:
-      - key: "{{request.operation}}"
+      - key: "{{ "{{" }}request.operation{{ "}}" }}"
         operator: NotEquals
         value: DELETE
     validate:
@@ -38,4 +39,5 @@ spec:
           any:
           - key: ownerReferences
             operator: AnyNotIn
-            value: "{{request.object.metadata.keys(@)}}"
+            value: "{{ "{{" }}request.object.metadata.keys(@){{ "}}" }}"
+{{- end }}

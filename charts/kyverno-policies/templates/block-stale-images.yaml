@@ -1,3 +1,4 @@
+{{- if .Values.blockStaleImages.enabled -}}
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -15,7 +16,7 @@ metadata:
       This policy checks the contents of every container image and inspects them for the create time.
       If it finds any image which was built more than 6 months ago this policy blocks the deployment.      
 spec:
-  validationFailureAction: enforce 
+  validationFailureAction: {{ .Values.blockStaleImages.validationFailureAction }} 
   rules:
     - name: block-stale-images
       match:
@@ -30,10 +31,11 @@ spec:
           context:
           - name: imageData
             imageRegistry:
-              reference: "{{ element.image }}"
+              reference: "{{ "{{" }} element.image {{ "}}" }}"
           deny:
             conditions:
               all:
-                - key: "{{ time_since('', '{{ imageData.configData.created }}', '') }}"
+                - key: "{{ "{{" }} time_since('', '{{ "{{" }} imageData.configData.created {{ "}}" }}', '') {{ "}}" }}"
                   operator: GreaterThan
                   value: 4380h
+{{- end }}

@@ -1,3 +1,4 @@
+{{- if .Values.disallowLatestTag.enabled -}}
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -13,7 +14,7 @@ metadata:
       a specific version of an application Pod. This policy validates that the image
       specifies a tag and that it is not called `latest`.      
 spec:
-  validationFailureAction: audit
+  validationFailureAction: {{ .Values.disallowLatestTag.validationFailureAction }}
   background: true
   rules:
   - name: require-image-tag
@@ -38,3 +39,4 @@ spec:
         spec:
           containers:
           - image: "!*:latest"
+{{- end }}

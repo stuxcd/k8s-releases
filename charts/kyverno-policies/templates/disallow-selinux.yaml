@@ -1,3 +1,4 @@
+{{- if .Values.disallowSELinux.enabled -}}
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -13,7 +14,7 @@ metadata:
       SELinux options can be used to escalate privileges and should not be allowed. This policy
       ensures that the `seLinuxOptions` field is undefined.      
 spec:
-  validationFailureAction: enforce
+  validationFailureAction: {{ .Values.disallowSELinux.validationFailureAction }}
   background: true
   rules:
     - name: selinux-type
@@ -80,3 +81,4 @@ spec:
                   =(seLinuxOptions):
                     X(user): "null"
                     X(role): "null"
+{{- end }}

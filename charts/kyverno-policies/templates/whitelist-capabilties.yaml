@@ -1,3 +1,4 @@
+{{- if .Values.whitelistCapabilties.enabled -}}
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -13,7 +14,7 @@ metadata:
     policies.kyverno.io/description: >-
             Adding capabilities beyond those listed in the policy must be disallowed.
 spec:
-  validationFailureAction: enforce
+  validationFailureAction: {{ .Values.whitelistCapabilties.validationFailureAction }}
   background: true
   rules:
     - name: adding-capabilities
@@ -30,7 +31,7 @@ spec:
         deny:
           conditions:
             all:
-            - key: "{{ request.object.spec.[ephemeralContainers, initContainers, containers][].securityContext.capabilities.add[] }}"
+            - key: "{{ "{{" }} request.object.spec.[ephemeralContainers, initContainers, containers][].securityContext.capabilities.add[] {{ "}}" }}"
               operator: AnyNotIn
               value:
               - AUDIT_WRITE
@@ -46,3 +47,4 @@ spec:
               - SETPCAP
               - SETUID
               - SYS_CHROOT
+{{- end }}

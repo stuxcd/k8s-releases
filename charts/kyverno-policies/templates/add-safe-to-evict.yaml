@@ -1,3 +1,4 @@
+{{- if .Values.addSafeToEvict.enabled -}}
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -39,3 +40,4 @@ spec:
           volumes: 
           - hostPath:
               <(path): "*"
+{{- end }}

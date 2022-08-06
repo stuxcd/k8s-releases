@@ -1,3 +1,4 @@
+{{- if .Values.disallowPrivilegeContainers.enabled -}}
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -13,7 +14,7 @@ metadata:
       Privileged mode disables most security mechanisms and must not be allowed. This policy
       ensures Pods do not call for privileged mode.      
 spec:
-  validationFailureAction: enforce
+  validationFailureAction: {{ .Values.disallowPrivilegeContainers.validationFailureAction }}
   background: true
   rules:
     - name: privileged-containers
@@ -37,3 +38,4 @@ spec:
             containers:
               - =(securityContext):
                   =(privileged): "false"
+{{- end }}
