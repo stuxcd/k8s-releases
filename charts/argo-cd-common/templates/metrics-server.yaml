@@ -14,7 +14,7 @@ spec:
   source:
     chart: metrics-server
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 6.0.8
+    targetRevision: {{ .Values.metricsServer.targetRevision }}
     helm:
       releaseName: metrics-server
       parameters:

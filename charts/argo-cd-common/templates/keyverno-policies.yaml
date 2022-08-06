@@ -14,9 +14,80 @@ spec:
   source:
     chart: kyverno-policies
     repoURL: https://stuxcd.github.io/k8s-releases
-    targetRevision: 1.0.1
+    targetRevision: {{ .Values.kyvernoPolicies.targetRevision }}
     helm:
       releaseName: kyverno-policies
+      parameters:
+        - name: addSafeToEvict.enabled
+          value: "{{ .Values.kyvernoPolicies.addSafeToEvict.enabled }}"
+        - name: applicationPreventDefaultProject.enabled
+          value: "{{ .Values.kyvernoPolicies.applicationPreventDefaultProject.enabled }}"
+        - name: applicationPreventDefaultProject.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.applicationPreventDefaultProject.validationFailureAction }}
+        - name: blockStaleImages.enabled
+          value: "{{ .Values.kyvernoPolicies.blockStaleImages.enabled }}"
+        - name: blockStaleImages.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.blockStaleImages.validationFailureAction }}
+        - name: disallowDefaultNamespace.enabled
+          value: "{{ .Values.kyvernoPolicies.disallowDefaultNamespace.enabled }}"
+        - name: disallowDefaultNamespace.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.disallowDefaultNamespace.validationFailureAction }}
+        - name: disallowHostNamespaces.enabled
+          value: "{{ .Values.kyvernoPolicies.disallowHostNamespaces.enabled }}"
+        - name: disallowHostNamespaces.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.disallowHostNamespaces.validationFailureAction }}
+        - name: disallowHostPath.enabled
+          value: "{{ .Values.kyvernoPolicies.disallowHostPath.enabled }}"
+        - name: disallowHostPath.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.disallowHostPath.validationFailureAction }}
+        - name: disallowLatestTag.enabled
+          value: "{{ .Values.kyvernoPolicies.disallowLatestTag.enabled }}"
+        - name: disallowLatestTag.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.disallowLatestTag.validationFailureAction }}
+        - name: disallowPrivilegeEscalation.enabled
+          value: "{{ .Values.kyvernoPolicies.disallowPrivilegeEscalation.enabled }}"
+        - name: disallowPrivilegeEscalation.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.disallowPrivilegeEscalation.validationFailureAction }}
+        - name: disallowPrivilegeContainers.enabled
+          value: "{{ .Values.kyvernoPolicies.disallowPrivilegeContainers.enabled }}"
+        - name: disallowPrivilegeContainers.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.disallowPrivilegeContainers.validationFailureAction }}
+        - name: disallowSELinux.enabled
+          value: "{{ .Values.kyvernoPolicies.disallowSELinux.enabled }}"
+        - name: disallowSELinux.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.disallowSELinux.validationFailureAction }}
+        - name: enforceResourcesAsRatio.enabled
+          value: "{{ .Values.kyvernoPolicies.enforceResourcesAsRatio.enabled }}"
+        - name: enforceResourcesAsRatio.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.enforceResourcesAsRatio.validationFailureAction }}
+        - name: mutateLargeTerminationGPS.enabled
+          value: "{{ .Values.kyvernoPolicies.mutateLargeTerminationGPS.enabled }}"
+        - name: preventNakedPods.enabled
+          value: "{{ .Values.kyvernoPolicies.preventNakedPods.enabled }}"
+        - name: preventNakedPods.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.preventNakedPods.validationFailureAction }}
+        - name: recordCreationDetails.enabled
+          value: "{{ .Values.kyvernoPolicies.recordCreationDetails.enabled }}"
+        - name: requirePodRequestsLimits.enabled
+          value: "{{ .Values.kyvernoPolicies.requirePodRequestsLimits.enabled }}"
+        - name: requirePodRequestsLimits.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.requirePodRequestsLimits.validationFailureAction }}
+        - name: requireRunAsNonRootUser.enabled
+          value: "{{ .Values.kyvernoPolicies.requireRunAsNonRootUser.enabled }}"
+        - name: requireRunAsNonRootUser.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.requireRunAsNonRootUser.validationFailureAction }}
+        - name: requireRunAsNonRoot.enabled
+          value: "{{ .Values.kyvernoPolicies.requireRunAsNonRoot.enabled }}"
+        - name: requireRunAsNonRoot.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.requireRunAsNonRoot.validationFailureAction }}
+        - name: restrictWildcardResources.enabled
+          value: "{{ .Values.kyvernoPolicies.restrictWildcardResources.enabled }}"
+        - name: restrictWildcardResources.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.restrictWildcardResources.validationFailureAction }}
+        - name: whitelistCapabilties.enabled
+          value: "{{ .Values.kyvernoPolicies.whitelistCapabilties.enabled }}"
+        - name: whitelistCapabilties.validationFailureAction
+          value: {{ .Values.kyvernoPolicies.whitelistCapabilties.validationFailureAction }}
   syncPolicy:
     automated:
       prune: true
