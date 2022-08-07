@@ -1,0 +1,40 @@
+{{- if .Values.gpu.enabled -}}
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: gpu
+spec:
+  ttlSecondsUntilExpired: 86400 # 1 day
+  ttlSecondsAfterEmpty: 60
+  requirements:
+    {{- if .Values.gpu.requirements.capacityTypes }}
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: {{ toYaml .Values.gpu.requirements.capacityTypes | nindent 8 }}
+    {{- end }}
+    {{- if .Values.gpu.requirements.instanceTypes }}
+    - key: node.kubernetes.io/instance-type
+      operator: In
+      values: {{ toYaml .Values.gpu.requirements.instanceTypes | nindent 8 }}
+    {{- end }}
+  # In order for a pod to run on a node defined in this provisioner, it must tolerate nvidia.com/gpu in its pod spec
+  taints:
+  - key: nvidia.com/gpu
+    value: "true"
+    effect: NoSchedule
+  {{- if .Values.common.clusterName }}
+  provider:
+    subnetSelector:
+      {{- range .Values.common.provider.subnetSelectorKeys }}
+        {{ . }}: {{ $.Values.common.clusterName }}
+      {{- end }}
+    securityGroupSelector:
+      {{- range .Values.common.provider.securityGroupSelectorKeys }}
+        {{ . }}: {{ $.Values.common.clusterName }}
+      {{- end }}
+    tags:
+      {{- range .Values.common.provider.tagsKeys }}
+        {{ . }}: {{ $.Values.common.clusterName }}
+      {{- end }}
+  {{- end }}
+{{- end }}

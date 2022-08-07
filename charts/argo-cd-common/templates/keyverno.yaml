@@ -14,7 +14,7 @@ spec:
   source:
     chart: kyverno
     repoURL: https://kyverno.github.io/kyverno/
-    targetRevision: {{ .Values.kyverno.targetRevision }}
+    targetRevision: {{ .Values.kyverno.helm.targetRevision }}
     helm:
       releaseName: kyverno
   syncPolicy:

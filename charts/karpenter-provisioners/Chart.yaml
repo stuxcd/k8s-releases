@@ -1,0 +1,4 @@
+apiVersion: v2
+name: karpenter-provisioners
+version: 1.0.0
+home: https://stuxcd.github.io/k8s-releases

@@ -1,0 +1,5 @@
+{{- if .Values.aws.enabled -}}
+{{- if .Values.aws.awsNodeTerminationHandler.enabled -}}
+
+{{- end }}
+{{- end }}

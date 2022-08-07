@@ -1,0 +1,39 @@
+{{- if .Values.default.enabled -}}
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: default
+spec:
+  ttlSecondsUntilExpired: 2592000 # 30 Days
+  ttlSecondsAfterEmpty: 30
+  requirements:
+    {{- if .Values.default.requirements.capacityTypes }}
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: {{ toYaml .Values.default.requirements.capacityTypes | nindent 8 }}
+    {{- end }}
+    {{- if .Values.default.requirements.instanceTypes }}
+    - key: node.kubernetes.io/instance-type
+      operator: In
+      values: {{ toYaml .Values.default.requirements.instanceTypes | nindent 8 }}
+    {{- end }}
+  limits:
+    resources:
+      cpu: "100"
+      memory: 100Gi
+  {{- if .Values.common.clusterName }}
+  provider:
+    subnetSelector:
+      {{- range .Values.common.provider.subnetSelectorKeys }}
+        {{ . }}: {{ $.Values.common.clusterName }}
+      {{- end }}
+    securityGroupSelector:
+      {{- range .Values.common.provider.securityGroupSelectorKeys }}
+        {{ . }}: {{ $.Values.common.clusterName }}
+      {{- end }}
+    tags:
+      {{- range .Values.common.provider.tagsKeys }}
+        {{ . }}: {{ $.Values.common.clusterName }}
+      {{- end }}
+  {{- end }}
+{{- end }}

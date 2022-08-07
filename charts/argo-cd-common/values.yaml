@@ -3,66 +3,109 @@ argoCD:
 
 metricsServer:
   enabled: true
-  targetRevision: 6.0.8
+  helm:
+    targetRevision: 6.0.8
 
 kyverno:
   enabled: true
-  targetRevision: 2.5.2
+  helm:
+    targetRevision: 2.5.2
 
 kyvernoPolicies:
   enabled: true
-  targetRevision: 1.0.1
-  addSafeToEvict:
-    enabled: "true"
-  applicationPreventDefaultProject:
-    enabled: "true"
-    validationFailureAction: enforce
-  blockStaleImages:
-    enabled: "true"
-    validationFailureAction: enforce
-  disallowDefaultNamespace:
-    enabled: "true"
-    validationFailureAction: enforce
-  disallowHostNamespaces:
-    enabled: "true"
-    validationFailureAction: enforce
-  disallowHostPath:
-    enabled: "true"
-    validationFailureAction: enforce
-  disallowLatestTag:
-    enabled: "true"
-    validationFailureAction: audit
-  disallowPrivilegeEscalation:
-    enabled: "true"
-    validationFailureAction: enforce
-  disallowPrivilegeContainers:
-    enabled: "true"
-    validationFailureAction: enforce
-  disallowSELinux:
-    enabled: "true"
-    validationFailureAction: enforce
-  enforceResourcesAsRatio:
-    enabled: "true"
-    validationFailureAction: enforce
-  mutateLargeTerminationGPS:
-    enabled: "true"
-  preventNakedPods:
-    enabled: "true"
-    validationFailureAction: enforce
-  recordCreationDetails:
-    enabled: "true"
-  requirePodRequestsLimits:
-    enabled: "true"
-    validationFailureAction: audit
-  requireRunAsNonRootUser:
-    enabled: "true"
-    validationFailureAction: audit
-  requireRunAsNonRoot:
-    enabled: "true"
-    validationFailureAction: audit
-  restrictWildcardResources:
-    enabled: "true"
-    validationFailureAction: enforce
-  whitelistCapabilties:
-    enabled: "true"
-    validationFailureAction: enforce
+  helm:
+    targetRevision: 1.0.1
+    parameters:
+      addSafeToEvict:
+        enabled: "true"
+      applicationPreventDefaultProject:
+        enabled: "true"
+        validationFailureAction: enforce
+      blockStaleImages:
+        enabled: "true"
+        validationFailureAction: enforce
+      disallowDefaultNamespace:
+        enabled: "true"
+        validationFailureAction: enforce
+      disallowHostNamespaces:
+        enabled: "true"
+        validationFailureAction: enforce
+      disallowHostPath:
+        enabled: "true"
+        validationFailureAction: enforce
+      disallowLatestTag:
+        enabled: "true"
+        validationFailureAction: audit
+      disallowPrivilegeEscalation:
+        enabled: "true"
+        validationFailureAction: enforce
+      disallowPrivilegeContainers:
+        enabled: "true"
+        validationFailureAction: enforce
+      disallowSELinux:
+        enabled: "true"
+        validationFailureAction: enforce
+      enforceResourcesAsRatio:
+        enabled: "true"
+        validationFailureAction: enforce
+      mutateLargeTerminationGPS:
+        enabled: "true"
+      preventNakedPods:
+        enabled: "true"
+        validationFailureAction: enforce
+      recordCreationDetails:
+        enabled: "true"
+      requirePodRequestsLimits:
+        enabled: "true"
+        validationFailureAction: audit
+      requireRunAsNonRootUser:
+        enabled: "true"
+        validationFailureAction: audit
+      requireRunAsNonRoot:
+        enabled: "true"
+        validationFailureAction: audit
+      restrictWildcardResources:
+        enabled: "true"
+        validationFailureAction: enforce
+      whitelistCapabilties:
+        enabled: "true"
+        validationFailureAction: enforce
+
+aws:
+  enabled: true
+  common:
+    clusterName: ""
+    clusterEndpoint: ""
+  
+  karpenter:
+    enabled: true
+    helm:
+      targetRevision: 0.8.2
+      parameters:
+        roleARN: ""
+        defaultInstanceProfile: ""
+  
+  karpenterProvisioners:
+    enabled: true
+    helm:
+      targetRevision: 1.0.0
+      parameters:
+        common:
+          provider:
+            subnetSelectorKeys: [karpenter.sh/discovery]
+            securityGroupSelectorKeys: [karpenter.sh/discovery]
+            tagsKeys: [karpenter.sh/discovery]
+        default:
+          enabled: true
+        gpu:
+          enabled: true
+  
+  awsNodeTerminationHandler:
+    enabled: false
+    helm:
+      targetRevision: 
+  
+  awsForFluentBit:
+    enabled: true
+    helm:
+      targetRevision: 

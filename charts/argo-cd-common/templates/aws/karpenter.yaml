@@ -1,0 +1,37 @@
+{{- if .Values.aws.enabled -}}
+{{- if .Values.aws.karpenter.enabled -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: karpenter
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: karpenter
+    server: https://kubernetes.default.svc
+  project: {{ .Values.argoCD.project }}
+  source:
+    chart: karpenter
+    repoURL: https://charts.karpenter.sh
+    targetRevision: {{ .Values.aws.karpenter.helm.targetRevision }}
+    helm:
+      releaseName: karpenter
+      parameters:
+        - name: clusterName
+          value: {{ .Values.aws.common.clusterName }}
+        - name: clusterEndpoint
+          value: {{ .Values.aws.common.clusterEndpoint }}
+        - name: serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn
+          value: {{ .Values.aws.karpenter.helm.parameters.roleARN }}
+        - name: aws.defaultInstanceProfile
+          value: {{ .Values.aws.karpenter.helm.parameters.defaultInstanceProfile }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+{{- end }}
+{{- end }}

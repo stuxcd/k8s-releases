@@ -1,0 +1,41 @@
+{{- if .Values.aws.enabled -}}
+{{- if .Values.aws.karpenterProvisioners.enabled -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: karpenter-provisioners
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: karpenter
+    server: https://kubernetes.default.svc
+  project: {{ .Values.argoCD.project }}
+  source:
+    chart: karpenter-provisioners
+    repoURL: https://stuxcd.github.io/k8s-releases
+    targetRevision: {{ .Values.aws.karpenterProvisioners.helm.targetRevision }}
+    helm:
+      releaseName: karpenter-provisioners
+      parameters:
+        - name: common.clusterName
+          value: {{ .Values.aws.common.clusterName }}
+        - name: common.provider.subnetSelectorKeys
+          value: {{ .Values.aws.karpenterProvisioners.helm.parameters.common.provider.subnetSelectorKeys }}
+        - name: common.provider.securityGroupSelectorKeys
+          value: {{ .Values.aws.karpenterProvisioners.helm.parameters.common.provider.securityGroupSelectorKeys }}
+        - name: common.provider.tagsKeys
+          value: {{ .Values.aws.karpenterProvisioners.helm.parameters.common.provider.tagsKeys }}
+        - name: default.enabled
+          value: {{ .Values.aws.karpenterProvisioners.helm.parameters.default.enabled }}
+        - name: gpu.enabled
+          value: {{ .Values.aws.karpenterProvisioners.helm.parameters.gpu.enabled }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+{{- end }}
+{{- end }}

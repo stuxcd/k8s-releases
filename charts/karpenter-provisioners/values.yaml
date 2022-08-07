@@ -1,0 +1,34 @@
+common:
+  clusterName: ""
+  provider:
+    subnetSelectorKeys: [karpenter.sh/discovery]
+    securityGroupSelectorKeys: [karpenter.sh/discovery]
+    tagsKeys: [karpenter.sh/discovery]
+
+default:
+  enabled: true
+  requirements:
+    capacityTypes: 
+    - spot
+    - on-demand
+    instanceTypes: []
+  limits:
+    enabled: true
+    resources:
+      cpu: "100"
+      memory: 100Gi
+
+gpu:
+  enabled: true
+  requirements:
+    capacityTypes: 
+    - spot
+    - on-demand
+    instanceTypes: 
+    - p3.8xlarge
+    - p3.16xlarge
+  limits:
+    enabled: false
+    resources:
+      cpu: "100"
+      memory: "100Gi"
