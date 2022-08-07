@@ -5,11 +5,13 @@ metricsServer:
   enabled: true
   helm:
     targetRevision: 6.0.8
+    parameters: {}
 
 kyverno:
   enabled: true
   helm:
     targetRevision: 2.5.2
+    parameters: {}
 
 kyvernoPolicies:
   enabled: true
@@ -74,11 +76,12 @@ kyvernoPolicies:
 aws:
   enabled: true
   common:
+    region: ""
     clusterName: ""
     clusterEndpoint: ""
   
   karpenter:
-    enabled: true
+    enabled: false
     helm:
       targetRevision: 0.8.2
       parameters:
@@ -86,7 +89,7 @@ aws:
         defaultInstanceProfile: ""
   
   karpenterProvisioners:
-    enabled: true
+    enabled: false
     helm:
       targetRevision: 1.0.0
       parameters:
@@ -103,9 +106,14 @@ aws:
   awsNodeTerminationHandler:
     enabled: false
     helm:
-      targetRevision: 
+      targetRevision: 0.18.5
+      parameters: {}
   
   awsForFluentBit:
-    enabled: true
+    enabled: false
     helm:
-      targetRevision: 
+      targetRevision: 0.1.19
+      parameters:
+        roleArn: ""
+        logGroupName: "/aws/eks/fluentbit-cloudwatch/logs"
+        logRetentionDays: 365

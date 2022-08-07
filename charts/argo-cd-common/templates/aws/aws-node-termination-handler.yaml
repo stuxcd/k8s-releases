@@ -1,5 +1,35 @@
 {{- if .Values.aws.enabled -}}
 {{- if .Values.aws.awsNodeTerminationHandler.enabled -}}
-
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-node-termination-handler
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: kube-system
+    server: https://kubernetes.default.svc
+  project: {{ .Values.argoCD.project }}
+  source:
+    chart: aws-node-termination-handler
+    repoURL: https://aws.github.io/eks-charts
+    targetRevision: {{ .Values.aws.awsNodeTerminationHandler.helm.targetRevision }}
+    helm:
+      releaseName: aws-node-termination-handler
+      parameters:
+        - name: enableProbesServer
+          value: "true"
+        - name: enableScheduledEventDraining
+          value: "true"
+        - name: enableRebalanceMonitoring
+          value: "true"
+        - name: enableRebalanceDraining
+          value: "true"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
 {{- end }}
 {{- end }}

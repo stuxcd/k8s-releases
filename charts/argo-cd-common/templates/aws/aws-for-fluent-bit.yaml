@@ -1,5 +1,41 @@
 {{- if .Values.aws.enabled -}}
 {{- if .Values.aws.awsForFluentBit.enabled -}}
-
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-for-fluent-bit
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: kube-system
+    server: https://kubernetes.default.svc
+  project: {{ .Values.argoCD.project }}
+  source:
+    chart: aws-for-fluent-bit
+    repoURL: https://aws.github.io/eks-charts
+    targetRevision: {{ .Values.aws.awsForFluentBit.helm.targetRevision }}
+    helm:
+      releaseName: aws-for-fluent-bit
+      parameters:
+        - name: cloudWatch.region
+          value: {{ .Values.aws.common.region }}
+        - name: serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn
+          value: {{ .Values.aws.awsForFluentBit.helm.parameters.roleARN }}
+        - name: cloudWatch.logGroupName
+          value: {{ .Values.aws.awsForFluentBit.helm.parameters.logGroupName }}
+        - name: cloudWatch.logRetentionDays
+          value: {{ .Values.aws.awsForFluentBit.helm.parameters.logRetentionDays }}
+        - name: firehose.enabled
+          value: "false"
+        - name: kinesis.enabled
+          value: "false"
+        - name: elasticsearch.enabled
+          value: "false"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
 {{- end }}
 {{- end }}
