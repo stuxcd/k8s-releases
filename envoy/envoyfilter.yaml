@@ -1,0 +1,89 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: jwt-podinfo
+  namespace: test
+spec:
+  workloadSelector:
+    labels:
+      app.kubernetes.io/name: podinfo
+  configPatches:
+    # The first patch adds the lua filter to the listener/http connection manager
+  - applyTo: HTTP_FILTER
+    match:
+      context: SIDECAR_INBOUND
+    patch:
+      operation: INSERT_BEFORE
+      value: # lua filter specification
+       name: envoy.filters.http.jwt_authn
+       typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtAuthentication
+          providers:
+            jwt_auth:
+              remote_jwks:
+                http_uri:
+                  uri: https://CHANGE_ME_DOMAIN-------------------------/.well-known/jwks.json
+                  cluster: identity_provider
+                  timeout: 2s
+              payload_in_metadata: jwt_payload
+          rules:
+          - match:
+              prefix: "/healthz"
+          - match:
+              prefix: "/readyz"
+          - match:
+              prefix: "/"
+            requires:
+              provider_name: jwt_auth
+  - applyTo: HTTP_FILTER
+    match:
+      context: SIDECAR_INBOUND
+      listener:
+        #portNumber: 8000
+        filterChain:
+          filter:
+            name: "envoy.filters.network.http_connection_manager"
+            subFilter:
+              name: "envoy.filters.http.router"
+    patch:
+      operation: INSERT_BEFORE
+      value: # lua filter specification
+       name: envoy.filters.http.lua
+       typed_config:
+          "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+          inlineCode: |
+            function envoy_on_request(request_handle)
+              local meta = request_handle:streamInfo():dynamicMetadata()
+              for key, value in pairs(meta) do
+                request_handle:headers():add("jwt-extracted-user", value.jwt_payload.iss)
+              end
+            end
+  # The second patch adds the cluster that is referenced by the lua code
+  # cds match is omitted as a new cluster is being added
+  - applyTo: CLUSTER
+    match:
+      context: SIDECAR_OUTBOUND
+    patch:
+      operation: ADD
+      value: # cluster specification
+        name: identity_provider
+        type: LOGICAL_DNS
+        dns_lookup_family: V4_ONLY
+        load_assignment:
+          cluster_name: identity_provider
+          endpoints:
+          - lb_endpoints:
+            - endpoint:
+                address:
+                  socket_address:
+                    address: CHANGE_ME_DOMAIN-------------------------
+                    port_value: 443
+        transport_socket:
+          name: envoy.transport_sockets.tls
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+            sni: CHANGE_ME_DOMAIN-------------------------
+            common_tls_context:
+              validation_context:
+                trusted_ca:
+                  filename: /etc/ssl/certs/ca-certificates.crt
