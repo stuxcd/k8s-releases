@@ -78,13 +78,13 @@ static_resources:
                   local body_size = body:length()
                   local body_bytes = body:getBytes(0, body_size)
                   local enc_body = enc(tostring(body_bytes))
-                  local log_event = [[{"type":"audit_log]] .. 
-                      [[","timestamp":"]] .. request_handle:timestamp() .. 
-                      [[","authority":"]] .. request_handle:headers():get(":authority") .. 
-                      [[","method":"]] .. request_handle:headers():get(":method") .. 
-                      [[","path":"]] .. request_handle:headers():get(":path") .. 
-                      [[","scheme":"]] .. request_handle:headers():get(":scheme") .. 
-                      [[","user":"]] .. user ..
+                  local log_event = [[{"type":"audit_log]]..
+                      [[","timestamp":"]] ..request_handle:timestamp()..
+                      [[","authority":"]] ..request_handle:headers():get(":authority")..
+                      [[","method":"]] ..request_handle:headers():get(":method")..
+                      [[","path":"]] ..request_handle:headers():get(":path")..
+                      [[","scheme":"]] ..request_handle:headers():get(":scheme")..
+                      [[","user":"]] ..user..
                       [[","body":"]] ..enc_body.. [["}]]
                   print(log_event)
                 end
