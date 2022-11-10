@@ -1,6 +1,5 @@
 version: "3.8"
 services:
-
   proxy:
     build:
       context: .
@@ -10,6 +9,7 @@ services:
 
   web_service:
     build:
+      context: .
       dockerfile: Dockerfile-echo
     ports:
     - "${PORT_WEB:-8080}:8080"
