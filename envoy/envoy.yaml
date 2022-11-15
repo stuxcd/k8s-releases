@@ -31,7 +31,7 @@ static_resources:
                 jwt_auth:
                   remote_jwks:
                     http_uri:
-                      uri: https://dev-zdn480lznos7je22.us.auth0.com/.well-known/jwks.json
+                      uri: https://CHANGE_ME_DOMAIN-------------------------/.well-known/jwks.json
                       cluster: identity_provider
                       timeout: 2s
                     cache_duration:
@@ -51,7 +51,7 @@ static_resources:
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua
               inline_code: |
-                -- character table string
+                -- character table string for encoding
                 local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
                 -- encoding
                 function enc(data)
@@ -67,6 +67,7 @@ static_resources:
                     end)..({ '', '==', '=' })[#data%3+1])
                 end
 
+                -- return json string
                 function log(handle, user, message)
                  return [[{"type":"audit_log]]..
                     [[","timestamp":"]] ..handle:timestamp()..
@@ -90,32 +91,15 @@ static_resources:
                   local chunks = 0
                   for chunk in request_handle:bodyChunks() do
                     chunks = chunks + 1
-                    local body_bytes = chunk:getBytes(0, chunk:length())
-                    local enc_body = enc(tostring(body_bytes))
-                    local log_chunk_event = [[{"type":"audit_log]]..
-                      [[","timestamp":"]] ..request_handle:timestamp()..
-                      [[","request-id":"]] ..requestId..
-                      [[","authority":"]] ..request_handle:headers():get(":authority")..
-                      [[","method":"]] ..request_handle:headers():get(":method")..
-                      [[","path":"]] ..request_handle:headers():get(":path")..
-                      [[","scheme":"]] ..request_handle:headers():get(":scheme")..
-                      [[","user":"]] ..user..
-                      [[","body":"]] ..enc_body.. [["}]]
                     if chunk:length() > 0 then
-                      print(log_chunk_event)
+                      local body_bytes = chunk:getBytes(0, chunk:length())
+                      local enc_body = enc(tostring(body_bytes))
+                      print(log(request_handle, user, enc_body))
                     end
                   end
+                  -- no body in request
                   if chunks == 0 then
-                    local log_event = [[{"type":"audit_log]]..
-                      [[","timestamp":"]] ..request_handle:timestamp()..
-                      [[","request-id":"]] ..requestId..
-                      [[","authority":"]] ..request_handle:headers():get(":authority")..
-                      [[","method":"]] ..request_handle:headers():get(":method")..
-                      [[","path":"]] ..request_handle:headers():get(":path")..
-                      [[","scheme":"]] ..request_handle:headers():get(":scheme")..
-                      [[","user":"]] ..user..
-                      [[","body":""}]]
-                      print(log_event)
+                    print(log(request_handle, user, ""))
                   end
                 end
           - name: envoy.filters.http.router
@@ -145,13 +129,13 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: dev-zdn480lznos7je22.us.auth0.com
+                address: CHANGE_ME_DOMAIN-------------------------
                 port_value: 443
     transport_socket:
       name: envoy.transport_sockets.tls
       typed_config:
         "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
-        sni: dev-zdn480lznos7je22.us.auth0.com
+        sni: CHANGE_ME_DOMAIN-------------------------
         common_tls_context:
           validation_context:
             trusted_ca:
