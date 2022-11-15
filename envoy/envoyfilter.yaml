@@ -51,8 +51,8 @@ spec:
               local user
               local meta = request_handle:streamInfo():dynamicMetadata()
               for key, value in pairs(meta) do
-                request_handle:headers():add("jwt-extracted-user", value.jwt_payload.iss)
                 user = value.jwt_payload.iss
+                request_handle:headers():add("jwt-extracted-user", user)
               end
               local requestId = request_handle:headers():get("x-request-id")
               local chunks = 0
